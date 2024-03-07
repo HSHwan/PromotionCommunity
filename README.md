@@ -1,1 +1,1 @@
-# promotionCommunity
+# PromotionCommunity

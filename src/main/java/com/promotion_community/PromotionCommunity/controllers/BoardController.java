@@ -36,7 +36,7 @@ public class BoardController {
     }
 
     @GetMapping("/board/view/{id}")
-    public String getBoardView(@PathVariable("id") Integer id,
+    public String showBoardView(@PathVariable("id") Integer id,
                                Model model) {
         model.addAttribute("board", boardService.loadBoardView(id));
         return "boardview";

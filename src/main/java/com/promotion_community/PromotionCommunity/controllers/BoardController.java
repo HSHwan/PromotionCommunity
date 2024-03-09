@@ -39,4 +39,10 @@ public class BoardController {
         model.addAttribute("board", boardService.loadBoardView(id));
         return "boardview";
     }
+
+    @GetMapping("/board/delete")
+    public String deleteBoardView(Integer id) {
+        boardService.deleteBoardView(id);
+        return "redirect:/board/list";
+    }
 }

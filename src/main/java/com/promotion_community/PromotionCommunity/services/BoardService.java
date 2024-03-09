@@ -17,12 +17,12 @@ public class BoardService {
         this.boardRepository = boardRepository;
     }
 
-    // 게시글 작성 처리
+    // 게시글 저장하기
     public void saveBoard(Board board) {
         boardRepository.save(board);
     }
 
-    // 게시글 리스트 처리
+    // 게시글 리스트 가져오기
     public List<Board> getBoardList() {
         return boardRepository.findAll();
     }
@@ -30,5 +30,10 @@ public class BoardService {
     // 특정 게시글 불러오기
     public Board loadBoardView(Integer id) {
         return boardRepository.findById(id).get();
+    }
+
+    // 특정 게시글 삭제
+    public void deleteBoardView(Integer id) {
+        boardRepository.deleteById(id);
     }
 }

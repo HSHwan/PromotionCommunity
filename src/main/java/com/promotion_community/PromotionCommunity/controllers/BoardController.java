@@ -25,8 +25,11 @@ public class BoardController {
     }
 
     @PostMapping("/board/writeprocess")
-    public void writeBoard(Board board) {
+    public String writeBoard(Board board, Model model) {
         boardService.writeBoard(board);
+        model.addAttribute("message", "글 작성이 완료되었습니다.");
+        model.addAttribute("searchUrl", "/board/list");
+        return "message";
     }
 
     @GetMapping("/board/list")
@@ -43,9 +46,12 @@ public class BoardController {
     }
 
     @GetMapping("/board/delete/{id}")
-    public String deleteBoardView(@PathVariable("id") Integer id) {
+    public String deleteBoardView(@PathVariable("id") Integer id,
+                                  Model model) {
         boardService.deleteBoardView(id);
-        return "redirect:/board/list";
+        model.addAttribute("message", "글 삭제가 완료되었습니다.");
+        model.addAttribute("searchUrl", "/board/list");
+        return "message";
     }
 
     @GetMapping("/board/edit/{id}")
@@ -56,12 +62,15 @@ public class BoardController {
     }
 
     @PostMapping("/board/update/{id}")
-    public String updateBoardView(@PathVariable("id") Integer id, Board newBoard){
+    public String updateBoardView(@PathVariable("id") Integer id, Board newBoard,
+                                  Model model){
         Board oldBoard = boardService.loadBoardView(id);
         oldBoard.setTitle(newBoard.getTitle());
         oldBoard.setContent(newBoard.getContent());
-
         boardService.writeBoard(oldBoard);
-        return "redirect:/board/list";
+
+        model.addAttribute("message", "글 수정이 완료되었습니다.");
+        model.addAttribute("searchUrl", "/board/list");
+        return "message";
     }
 }

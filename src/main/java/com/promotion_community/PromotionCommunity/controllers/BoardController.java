@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -25,7 +26,7 @@ public class BoardController {
 
     @PostMapping("/board/writeprocess")
     public void writeBoard(Board board) {
-        boardService.saveBoard(board);
+        boardService.writeBoard(board);
     }
 
     @GetMapping("/board/list")
@@ -34,15 +35,33 @@ public class BoardController {
         return "boardlist";
     }
 
-    @GetMapping("/board/view")
-    public String getBoardView(Model model, Integer id) {
+    @GetMapping("/board/view/{id}")
+    public String getBoardView(@PathVariable("id") Integer id,
+                               Model model) {
         model.addAttribute("board", boardService.loadBoardView(id));
         return "boardview";
     }
 
-    @GetMapping("/board/delete")
-    public String deleteBoardView(Integer id) {
+    @GetMapping("/board/delete/{id}")
+    public String deleteBoardView(@PathVariable("id") Integer id) {
         boardService.deleteBoardView(id);
+        return "redirect:/board/list";
+    }
+
+    @GetMapping("/board/edit/{id}")
+    public String editBoardView(@PathVariable("id") Integer id,
+                                Model model){
+        model.addAttribute("board", boardService.loadBoardView(id));
+        return "boardedit";
+    }
+
+    @PostMapping("/board/update/{id}")
+    public String updateBoardView(@PathVariable("id") Integer id, Board newBoard){
+        Board oldBoard = boardService.loadBoardView(id);
+        oldBoard.setTitle(newBoard.getTitle());
+        oldBoard.setContent(newBoard.getContent());
+
+        boardService.writeBoard(oldBoard);
         return "redirect:/board/list";
     }
 }

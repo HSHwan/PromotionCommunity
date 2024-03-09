@@ -17,11 +17,18 @@ public class BoardService {
         this.boardRepository = boardRepository;
     }
 
-    public void write(Board board) {
+    // 게시글 작성 처리
+    public void saveBoard(Board board) {
         boardRepository.save(board);
     }
 
-    public List<Board> boardList() {
+    // 게시글 리스트 처리
+    public List<Board> getBoardList() {
         return boardRepository.findAll();
+    }
+
+    // 특정 게시글 불러오기
+    public Board loadBoardView(Integer id) {
+        return boardRepository.findById(id).get();
     }
 }

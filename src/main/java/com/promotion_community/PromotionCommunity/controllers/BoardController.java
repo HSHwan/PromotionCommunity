@@ -19,18 +19,24 @@ public class BoardController {
     }
 
     @GetMapping("/board/write")
-    public String getBoardForm() {
+    public String showBoardForm() {
         return "boardwrite";
     }
 
     @PostMapping("/board/writeprocess")
     public void writeBoard(Board board) {
-        boardService.write(board);
+        boardService.saveBoard(board);
     }
 
     @GetMapping("/board/list")
-    public String getBoardList(Model model) {
-        model.addAttribute("list", boardService.boardList());
+    public String showBoardList(Model model) {
+        model.addAttribute("list", boardService.getBoardList());
         return "boardlist";
+    }
+
+    @GetMapping("/board/view")
+    public String getBoardView(Model model, Integer id) {
+        model.addAttribute("board", boardService.loadBoardView(id));
+        return "boardview";
     }
 }

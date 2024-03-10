@@ -3,12 +3,12 @@ package com.promotion_community.PromotionCommunity.services;
 import com.promotion_community.PromotionCommunity.models.Board;
 import com.promotion_community.PromotionCommunity.repositories.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -38,8 +38,8 @@ public class BoardService {
     }
 
     // 게시글 리스트 로드
-    public List<Board> loadBoardList() {
-        return boardRepository.findAll();
+    public Page<Board> loadBoardList(Pageable pageable) {
+        return boardRepository.findAll(pageable);
     }
 
     // 특정 게시글 로드

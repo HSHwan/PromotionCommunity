@@ -38,11 +38,18 @@ public class BoardController {
     }
 
     @GetMapping("/board/list")
-    public String showBoardList(Model model, @PageableDefault(page = 0, size = 20, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<Board> list = boardService.loadBoardList(pageable);
+    public String showBoardList(Model model,
+                                @PageableDefault(page = 0, size = 20, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+                                String searchKeyword) {
+        Page<Board> list = null;
+        if (searchKeyword == null){
+            list = boardService.getBoardList(pageable);
+        } else {
+            list = boardService.getBoardSearchList(searchKeyword, pageable);
+        }
 
         int nowPage = list.getPageable().getPageNumber() + 1;
-        int startPage = Math.max(nowPage - 4, 1);
+        int startPage = Math.max(nowPage - 10, 1);
         int endPage = Math.min(nowPage + 5, list.getTotalPages());
 
         model.addAttribute("list", list);
@@ -56,7 +63,7 @@ public class BoardController {
     @GetMapping("/board/view/{id}")
     public String showBoardView(@PathVariable("id") Integer id,
                                Model model) {
-        model.addAttribute("board", boardService.loadBoardView(id));
+        model.addAttribute("board", boardService.getBoardView(id));
         return "boardview";
     }
 
@@ -72,14 +79,14 @@ public class BoardController {
     @GetMapping("/board/edit/{id}")
     public String editBoardView(@PathVariable("id") Integer id,
                                 Model model){
-        model.addAttribute("board", boardService.loadBoardView(id));
+        model.addAttribute("board", boardService.getBoardView(id));
         return "boardedit";
     }
 
     @PostMapping("/board/update/{id}")
     public String updateBoardView(@PathVariable("id") Integer id, Board newBoard,
                                   Model model, MultipartFile file) throws Exception {
-        Board oldBoard = boardService.loadBoardView(id);
+        Board oldBoard = boardService.getBoardView(id);
         oldBoard.setTitle(newBoard.getTitle());
         oldBoard.setContent(newBoard.getContent());
         boardService.writeBoard(oldBoard, file);

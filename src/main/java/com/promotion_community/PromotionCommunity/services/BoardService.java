@@ -37,13 +37,18 @@ public class BoardService {
         boardRepository.save(board);
     }
 
-    // 게시글 리스트 로드
-    public Page<Board> loadBoardList(Pageable pageable) {
+    // 게시글 리스트 얻기
+    public Page<Board> getBoardList(Pageable pageable) {
         return boardRepository.findAll(pageable);
     }
 
-    // 특정 게시글 로드
-    public Board loadBoardView(Integer id) {
+    // 게시글 검색 결과 얻기
+    public Page<Board> getBoardSearchList(String searchKeyword, Pageable pageable) {
+        return boardRepository.findByTitleContaining(searchKeyword, pageable);
+    }
+
+    // 특정 게시글 얻기
+    public Board getBoardView(Integer id) {
         return boardRepository.findById(id).get();
     }
 

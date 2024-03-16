@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" th:href="@{/boardliststyle.css}">
+    <link rel="stylesheet" th:href="@{/css/boardliststyle.css}">
     <title>게시글 리스트 페이지</title>
 </head>
 
@@ -11,21 +11,6 @@
     <div class="page-title">
         <div class="container">
             <h3>광고 & 홍보 게시판</h3>
-        </div>
-    </div>
-
-    <!-- board search area -->
-    <div id="board-search">
-        <div class="container">
-            <div class="search-window">
-                <form th:action="@{/board/list}" method="get">
-                    <div class="search-wrap">
-                        <label for="search" class="blind">게시글 내용 검색</label>
-                        <input id="search" type="search" name="searchKeyword" placeholder="검색어를 입력해주세요." value="">
-                        <button type="submit" class="btn btn-dark">검색</button>
-                    </div>
-                </form>
-            </div>
         </div>
     </div>
 
@@ -44,17 +29,29 @@
                 <tr th:each="board : ${list}">
                     <td th:text="${board.id}"></td>
                     <td><a th:text="${board.title}" th:href="@{/board/view/{id}(id=${board.id})}"></a></td>
-                    <td>2017.07.13</td>
+                    <td></td>
                 </tr>
                 </tbody>
             </table>
-            <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
-                <a th:if="${page != nowPage}" th:href="@{/board/list(page = ${page - 1}, searchKeyword = ${param.searchKeyword})}" th:text="${page}"></a>
-                <strong th:if="${page == nowPage}" th:text="${page}" style="color: green"></strong>
-            </th:block>
+            <div class="board-bottom">
+                <!-- board paging area -->
+                <div class = "paging">
+                    <th:block  th:each="page : ${#numbers.sequence(startPage, endPage)}">
+                        <a th:if="${page != nowPage}" th:href="@{/board/list(page = ${page - 1}, searchKeyword = ${param.searchKeyword})}" th:text="${page}"></a>
+                        <a class="select" th:if="${page == nowPage}" th:text="${page}"></a>
+                    </th:block>
+                </div>
+                <!-- board search area -->
+                <form th:action="@{/board/list}" method="get">
+                    <div class="search-wrap">
+                        <label for="search" class="blind">게시글 내용 검색</label>
+                        <input id="search" type="search" name="searchKeyword" placeholder="검색어를 입력해주세요." value="">
+                        <button type="submit" class="btn btn-dark">검색</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-
 </section>
 </body>
 </html>

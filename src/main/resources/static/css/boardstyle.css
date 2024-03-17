@@ -1,7 +1,3 @@
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
-}
 section.notice {
     padding: 80px 0;
 }
@@ -9,6 +5,7 @@ section.notice {
 .page-title {
     margin-bottom: 60px;
 }
+
 .page-title h3 {
     font-size: 28px;
     color: #333333;
@@ -52,6 +49,7 @@ section.notice {
 
 .board-table tbody td {
     border-top: 1px solid #e7e7e7;
+    height: 30px;
     text-align: center;
 }
 
@@ -116,6 +114,28 @@ section.notice {
     color: #fff;
 }
 
+.board-view {
+    text-align: center;
+    font-size: 24px;
+    width: 100%;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    vertical-align: middle;
+}
+
+.board-view .view-title {
+    text-align: center;
+    font-size: 40px;
+    border-bottom: 1px solid #ccc;
+    width: 100%;
+}
+
+.board-view p {
+    margin-top: 15px;
+    font-size: 24px;
+    height: 400px;
+}
+
 .board-bottom {
     position: relative;
     width: 100%;
@@ -124,18 +144,16 @@ section.notice {
 
 .board-bottom form {
     position: relative;
-    left: 50%;
     overflow: hidden;
-    width: 410px;
-    margin-left: -205px
+    margin: 0 auto;
+    width: 510px;
 }
 
 .board-bottom .search-wrap {
     position: relative;
-    /*   padding-right: 124px; */
     margin: 0 auto;
     width: 80%;
-    max-width: 564px;
+    max-width: 720px;
 }
 
 .board-bottom .search-wrap input {

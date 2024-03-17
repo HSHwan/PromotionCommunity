@@ -2,14 +2,28 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/boardstyle.css}">
     <title>게시글 상세 페이지</title>
 </head>
 <body>
+<section class="notice">
+    <div class="page-title">
+        <div class="container">
+            <h3>광고 & 홍보 게시판</h3>
+        </div>
+    </div>
+    <!-- board view area -->
 
-<h1 th:text="${board.title}"></h1>
-<p th:text="${board.content}"></p>
-<a th:href="@{${board.filepath}}">다운로드</a>
-<a th:href="@{/board/delete/{id}(id=${board.id})}">삭제</a>
-<a th:href="@{/board/edit/{id}(id = ${board.id})}">수정</a>
+    <div class="board-view">
+        <div>
+            <header class="view-title" th:text="${board.title}"></header>
+        </div>
+        <p th:text="${board.content}"></p>
+        <a th:href="@{${board.filepath}}">다운로드</a>
+        <a th:href="@{/board/delete/{id}(id=${board.id})}">삭제</a>
+        <a th:href="@{/board/edit/{id}(id = ${board.id})}">수정</a>
+    </div>
+</section>
+
 </body>
 </html>
